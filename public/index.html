@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Cadastro de Cidadãos</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script type="module" src="/js/main.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="/">
+          <img src="/favicon.svg" alt="" width="26" height="26" />
+          Cadastro de Cidadãos
+        </a>
+        <span class="topbar-note">
+          <span class="status-dot" aria-hidden="true"></span>
+          Validação de CPF em tempo real
+        </span>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>Registre e consulte cidadãos pelo nome ou CPF.</h1>
+        <p>
+          O CPF é conferido automaticamente pelos dígitos verificadores antes de qualquer cadastro.
+        </p>
+      </section>
+
+      <div class="layout">
+        <section class="panel" aria-labelledby="registration-title">
+          <header class="panel-header">
+            <p class="eyebrow"><span>01</span> Cadastro</p>
+            <h2 id="registration-title">Novo cidadão</h2>
+          </header>
+
+          <form id="registration-form" class="form" novalidate>
+            <div class="field">
+              <label for="name">Nome completo</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                maxlength="120"
+                placeholder="Ex.: Maria da Silva"
+                required
+                aria-describedby="name-message"
+              />
+              <p id="name-message" class="field-message" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label for="cpf">CPF</label>
+              <input
+                id="cpf"
+                name="cpf"
+                class="input-mono"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="14"
+                placeholder="000.000.000-00"
+                required
+                aria-describedby="cpf-message"
+              />
+              <p id="cpf-message" class="field-message" aria-live="polite"></p>
+            </div>
+
+            <p id="registration-alert" class="alert" role="alert" hidden></p>
+
+            <button type="submit" class="button">Cadastrar</button>
+          </form>
+
+          <div id="registration-result" class="record" role="status" hidden>
+            <p class="record-header">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <path d="m8.5 12.5 2.5 2.5 4.5-5" />
+              </svg>
+              <span data-message></span>
+            </p>
+            <dl class="record-details">
+              <div>
+                <dt>Nome</dt>
+                <dd data-name></dd>
+              </div>
+              <div>
+                <dt>CPF</dt>
+                <dd class="mono" data-cpf></dd>
+              </div>
+              <div>
+                <dt>Cadastrado em</dt>
+                <dd data-registered-at></dd>
+              </div>
+            </dl>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="search-title">
+          <header class="panel-header">
+            <p class="eyebrow"><span>02</span> Consulta</p>
+            <h2 id="search-title">Pesquisar cidadão</h2>
+          </header>
+
+          <form id="search-form" class="search" role="search" novalidate>
+            <label for="search-term" class="visually-hidden">Nome ou CPF</label>
+            <div class="search-field">
+              <input
+                id="search-term"
+                name="term"
+                type="search"
+                autocomplete="off"
+                placeholder="Nome ou CPF"
+                aria-describedby="search-hint"
+              />
+              <button type="button" class="search-clear" aria-label="Limpar pesquisa" hidden>
+                &times;
+              </button>
+            </div>
+            <button type="submit" class="button">Pesquisar</button>
+          </form>
+          <p id="search-hint" class="search-hint">
+            Aceita parte do nome, sem diferenciar acentos, ou o CPF com ou sem pontuação.
+          </p>
+
+          <div id="search-results" class="search-results" aria-live="polite"></div>
+        </section>
+      </div>
+    </main>
+
+    <template id="citizen-item-template">
+      <li class="citizen">
+        <span class="citizen-avatar" aria-hidden="true" data-initials></span>
+        <span class="citizen-name" data-name></span>
+        <span class="citizen-cpf" data-cpf></span>
+      </li>
+    </template>
+  </body>
+</html>
